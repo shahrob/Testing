@@ -23,8 +23,8 @@ android {
         applicationId "com.positivevibes.app"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 37
-        versionName "1.0.37"
+        versionCode 40
+        versionName "1.0.40"
         multiDexEnabled true
 
 

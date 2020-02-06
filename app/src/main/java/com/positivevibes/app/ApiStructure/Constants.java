@@ -7,8 +7,10 @@ package com.positivevibes.app.ApiStructure;
 public interface Constants {
 
     interface URL {
-        String BASE_URL="http://50.116.22.10:4200";
-//        String BASE_URL="http://172.104.191.9";
+
+//        String BASE_URL="http://50.116.22.10:4200";
+        String BASE_URL="http://3.212.199.216:4200";
+
 
         String REGISTER = BASE_URL + "/user/register";
         String LOGIN    = BASE_URL + "/user/login";
