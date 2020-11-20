@@ -6,12 +6,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:fitsSystemWindows="true"
-
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:theme="@style/TransparentBar"
-
-    tools:context="com.positivevibes.app.Activity.LoginActivity">
+    android:background="@drawable/background"
+    tools:context="jokesbook.app.Activity.LoginActivity">
 
     <LinearLayout
         android:id="@+id/title_bar"
@@ -44,14 +43,18 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="2.2"
+            android:gravity="center"
             >
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@drawable/logo"
-                />
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="Login"
+               android:textColor="@android:color/white"
+               android:textSize="15sp"
+
+               />
 
         </LinearLayout>
         <LinearLayout

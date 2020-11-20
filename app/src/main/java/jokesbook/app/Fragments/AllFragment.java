@@ -1,0 +1,638 @@
+package jokesbook.app.Fragments;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import jokesbook.app.Activity.FirstActivity;
+import jokesbook.app.Adapters.AllFeedsAdapter;
+import jokesbook.app.ApiStructure.ApiModelClass;
+import jokesbook.app.ApiStructure.Constants;
+import jokesbook.app.ApiStructure.ServerCallback;
+import jokesbook.app.Models.AllListModel.AllList;
+import jokesbook.app.Models.FeedListModel.CategoriesList;
+import jokesbook.app.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
+public class AllFragment extends Fragment {
+
+    View rootView;
+
+
+    private RecyclerView recyclerView;
+    private AllFeedsAdapter adapter;
+    public static List<AllList> feedList;
+    ArrayList<String> feed_remain_array;
+    LinearLayoutManager mLayoutManager;
+    FragmentTransaction transaction;
+    boolean isLoading =true ;
+    ProgressBar progressBar,progress;
+    SharedPreferences mPrefs;
+    private SwipeRefreshLayout swipeContainer;
+    public static String positionForRefresh="";
+    public static String current_add="one";
+
+    public static ArrayList<String> category_history_array;
+    public static ArrayList<String> category_id_history;
+
+    AdView banner_add;
+
+    ArrayList<CategoriesList> categoriesarrayList;
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        rootView = inflater.inflate(R.layout.fragment_all, container, false);
+
+        transaction = getFragmentManager().beginTransaction();
+        setRetainInstance(true);
+
+        AdView adView = new AdView(getActivity());
+
+        adView.setAdSize(AdSize.BANNER);
+
+        adView.setAdUnitId(String.valueOf(R.string.unitid));
+
+
+
+
+//         Load Add
+
+        banner_add= rootView.findViewById(R.id.adView);
+
+        MobileAds.initialize(getActivity(), String.valueOf(R.string.appid));
+
+        AdRequest ad_req = new AdRequest.Builder().build();
+        banner_add.loadAd(ad_req);
+
+
+        // Load Add
+
+        feedList = new ArrayList<>();
+        category_history_array = new ArrayList<>();
+        category_id_history = new ArrayList<>();
+
+        feed_remain_array = new ArrayList<>();
+        progressBar=rootView.findViewById(R.id.progressBar4);
+        progress=rootView.findViewById(R.id.progress);
+        progress.setVisibility(View.VISIBLE);
+        swipeContainer = (SwipeRefreshLayout) rootView.findViewById(R.id.swipeContainer);
+        swipeContainer.setColorSchemeColors(Color.parseColor("#9F0030"));
+
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call swipeContainer.setRefreshing(false)
+                // once the network request has completed successfully.
+//                fetchTimelineAsync(0);
+//              Toast.makeText(getActivity(), " Swipe To Refresh ", Toast.LENGTH_SHORT).show();
+                getFeedApi(Constants.URL.GETALLFEED);
+            }
+        });
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.rv);
+
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+
+        recyclerView.getItemAnimator().endAnimations();
+//        recyclerView.setNestedScrollingEnabled(false);
+
+
+        progressBar.setVisibility(View.VISIBLE);
+        getFeedApi(Constants.URL.GETALLFEED);
+
+        return rootView;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+
+//                Toast.makeText(getActivity(), "Visible", Toast.LENGTH_SHORT).show();
+//                refresh if favourite occur
+
+                if(!FeedFragment.refresh.equals("")) {
+                    adapter.notifyDataSetChanged();
+                    FeedFragment.refresh = "";
+                }
+
+
+            }
+            catch (Exception e){
+
+            }
+        }
+    }
+
+    private void getFeedApi(String url) {
+
+
+        // hit api............
+//        final ProgressDialog ringProgressDialog;
+//
+//        ringProgressDialog = ProgressDialog.show(getActivity(), "", "please wait", true);
+//        ringProgressDialog.setCancelable(false);
+//        ringProgressDialog.show();
+
+        mPrefs = getActivity().getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
+        String token = mPrefs.getString("USER_TOKEN", "");
+
+//        if(token.equals(InProfileSettingChangePassword.updated_token)){
+//            Toast.makeText(getActivity(), "token same", Toast.LENGTH_SHORT).show();
+//
+//
+//        }
+//
+//        else {
+//            Toast.makeText(getActivity(), "token changed............", Toast.LENGTH_SHORT).show();
+//
+//
+//        }
+
+        Map<String, String> postParam = new HashMap<String, String>();
+
+
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put("x-sh-auth", token);
+
+        ApiModelClass.GetApiResponse(Request.Method.GET, url, getActivity(), postParam, headers, new ServerCallback() {
+            @Override
+            public void onSuccess(JSONObject result, String ERROR) {
+
+                if (ERROR.isEmpty()) {
+
+                    try {
+
+                        feedList.clear();
+//                        Feeds feed_list_obj = new Feeds();
+
+
+                        JSONObject jsonObject = new JSONObject(String.valueOf(result));
+
+                        JSONArray files = jsonObject.getJSONArray("files");
+
+//                        ArrayList<Feeds> feeds_arr=new ArrayList<>();
+//                        isLoading=true;
+                        if (files.length() > 0) {
+
+
+
+                            for (int a = 0; a < files.length(); a++) {
+
+                                AllList feed_obj = new AllList();
+                                JSONObject jsonObject1 = files.getJSONObject(a);
+
+                                boolean admin_quote=jsonObject1.getBoolean("admin_quote");
+
+                                if (admin_quote){
+                                    String feed_blog_url="https://pk.zapmeta.ws/ws?q=blogs%20on%20websites&asid=zm_pk_gb_1_cg1_05&abt=1&mt=b&nw=g&de=c&ap=&kid=kwd-11480526309&aid=35417532236&ac=469&cid=686767819&aid=35417532236&kid=kwd-11480526309&locale=en_PK&gclid=Cj0KCQiAhs79BRD0ARIsAC6XpaWWdElwtrj-aSEJMNpbXYMrEVj2HGO-qAlNLVJfyJ-GOsjxvMzTXbkaAq1rEALw_wcB";
+                                    String feed_id = jsonObject1.getString("_id");
+                                    String title = jsonObject1.getString("title");
+                                    String large_image = jsonObject1.getString("large_image");
+                                    String small_image = jsonObject1.getString("small_image");
+
+                                    boolean liked_by_me=jsonObject1.getBoolean("liked_by_me");
+
+                                    int liked_count = jsonObject1.getInt("liked_count");
+                                    int comments_count = jsonObject1.getInt("comment_count");
+
+                                    JSONObject author = new JSONObject(jsonObject1.getString("author"));
+
+                                    String a_id = author.getString("_id");
+                                    String a_name = author.getString("name");
+                                    String a_img = author.getString("img");
+                                    boolean a_check = author.getBoolean("author");
+                                    JSONArray categories_ref = jsonObject1.getJSONArray("categories_ref");
+
+                                    categoriesarrayList = new ArrayList<>();
+
+                                    for (int i = 0; i < categories_ref.length(); i++){
+
+
+                                        JSONObject categories_obj =categories_ref.getJSONObject(i);
+                                        JSONObject categories = categories_obj.getJSONObject("category");
+                                        CategoriesList categoriesList = new CategoriesList();
+
+                                        String cate_id = categories.getString("_id");
+                                        String cate_title = categories.getString("title");
+                                        String cate_image = categories.getString("cat_img");
+
+                                        categoriesList.setCate_id(cate_id);
+                                        categoriesList.setCate_title(cate_title);
+                                        categoriesList.setCate_img(cate_image);
+                                        categoriesarrayList.add(categoriesList);
+                                    }
+
+                                    feed_obj.set_id(feed_id);
+                                    feed_obj.setTitle(title);
+                                    feed_obj.setLarge_image(large_image);
+                                    feed_obj.setSmall_image(small_image);
+                                    feed_obj.setLiked_by_me(liked_by_me);
+                                    feed_obj.setLiked_count(liked_count);
+                                    feed_obj.setComments_count(comments_count);
+                                    feed_obj.setAuther_id(a_id);
+                                    feed_obj.setAuther_name(a_name);
+                                    feed_obj.setAuther_img(a_img);
+                                    feed_obj.setAdmin_quote(true);
+                                    feed_obj.setAuthor_check(a_check);
+                                    feed_obj.setCategoriesArrayList(categoriesarrayList);
+
+
+//                                    new addition
+                                    feed_obj.setBlog_url(feed_blog_url);
+
+
+                                    feedList.add(feed_obj);
+
+                                }else {
+
+                                    String feed_id = jsonObject1.getString("_id");
+                                    String title = jsonObject1.getString("title");
+
+                                    boolean liked_by_me=jsonObject1.getBoolean("liked_by_me");
+
+                                    int liked_count = jsonObject1.getInt("liked_count");
+                                    int comments_count = jsonObject1.getInt("comment_count");
+
+                                    JSONObject user = new JSONObject(jsonObject1.getString("user"));
+
+                                    String u_id = user.getString("_id");
+                                    String u_dp_active_file = user.getString("dp_active_file");
+                                    String u_full_name = user.getString("full_name");
+
+                                    feed_obj.set_id(feed_id);
+                                    feed_obj.setTitle(title);
+                                    feed_obj.setLiked_by_me(liked_by_me);
+                                    feed_obj.setLiked_count(liked_count);
+                                    feed_obj.setComments_count(comments_count);
+                                    feed_obj.setUser_id(u_id);
+                                    feed_obj.setUser_fullname(u_full_name);
+                                    feed_obj.setUser_dp(u_dp_active_file);
+                                    feed_obj.setAdmin_quote(false);
+                                    feed_obj.setCategoriesArrayList(categoriesarrayList);
+
+                                    feedList.add(feed_obj);
+                                }
+
+                            }
+
+                        }
+
+                        String load_more_url = jsonObject.getString("load_more_url");
+
+                        feed_remain_array.clear();
+                        feed_remain_array.add(load_more_url);
+
+                        adapter = new AllFeedsAdapter(getActivity(), feedList, transaction);
+
+//                        recyclerView.setHasFixedSize(true);
+                        recyclerView.setItemViewCacheSize(20);
+                        recyclerView.setDrawingCacheEnabled(true);
+                        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
+
+
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(mLayoutManager);
+
+                        recyclerView.setOnScrollListener(recyclerViewOnScrollListener);
+
+
+//                        ringProgressDialog.dismiss();
+
+                        progressBar.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    swipeContainer.setRefreshing(false);
+
+                } else {
+                    progress.setVisibility(View.GONE);
+                    swipeContainer.setRefreshing(false);
+
+                    progressBar.setVisibility(View.GONE);
+
+                    if(ERROR.equals("401")){
+
+//                        SharedPreferences mPrefs = getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor mEditor = mPrefs.edit();
+                        mEditor.putString("USER_EMAIL", "");
+                        mEditor.putString("USER_PASSWORD", "");
+                        mEditor.putString("USER_TOKEN", "");
+                        mEditor.putString("USER_PIC", "");
+                        mEditor.apply();
+                        Intent intt = new Intent(getActivity(), FirstActivity.class);
+                        startActivity(intt);
+                        getActivity().finish();
+                    }
+                    else {
+
+//                    ringProgressDialog.dismiss();
+//                        Toast.makeText(getActivity(), ERROR, Toast.LENGTH_SHORT).show();
+
+                    }
+
+                }
+
+            }
+        });
+        // hit api--------------------
+
+
+    }
+
+
+    private RecyclerView.OnScrollListener recyclerViewOnScrollListener = new RecyclerView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+            super.onScrollStateChanged(recyclerView, newState);
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            int visibleItemCount ,totalItemCount,pastVisiblesItems,lastVisibleItem,threshhold=1;
+            if(dy > 0) {
+
+                visibleItemCount = mLayoutManager.getChildCount();
+                totalItemCount = mLayoutManager.getItemCount();
+                pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+
+
+//            int pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+                int a = 10;
+                int b = a;
+
+//                if (!isLoading && !isLastPage) {
+//                    if (visibleItemCount >= totalItemCount
+//
+//                            && totalItemCount >= PAGE_SIZE) {
+//                        loadMoreItems();
+//                    }
+//                }
+
+                if (isLoading) {
+
+                    if ( (visibleItemCount + pastVisiblesItems) >= totalItemCount)
+
+//                    if ( totalItemCount  <= (lastVisibleItem + threshhold))
+
+                    {
+                        isLoading = false;
+
+                        loadMoreItems();
+                    }
+
+                }
+            }
+        }
+    };
+
+
+    private void getFeedApi2(String url) {
+
+//        feedList.clear();
+//        isLoading=true;
+        // hit api............
+//        final ProgressDialog ringProgressDialog;
+//
+//        ringProgressDialog = ProgressDialog.show(getActivity(), "", "please wait", true);
+//        ringProgressDialog.setCancelable(false);
+//        ringProgressDialog.show();
+
+        SharedPreferences mPrefs = getActivity().getSharedPreferences("USER_DATA", Context.MODE_PRIVATE);
+        String token = mPrefs.getString("USER_TOKEN", "");
+
+        Map<String, String> postParam = new HashMap<String, String>();
+
+
+        HashMap<String, String> headers = new HashMap<String, String>();
+        headers.put("x-sh-auth", token);
+
+        ApiModelClass.GetApiResponse(Request.Method.GET, Constants.URL.BASE_URL + url, getActivity(), postParam, headers, new ServerCallback() {
+            @Override
+            public void onSuccess(JSONObject result, String ERROR) {
+
+                if (ERROR.isEmpty()) {
+
+                    try {
+
+//                        Feeds feed_list_obj = new Feeds();
+                        isLoading=true;
+
+                        ArrayList<AllList> test=new ArrayList<>();
+
+                        JSONObject jsonObject = new JSONObject(String.valueOf(result));
+
+                        JSONArray media_files = jsonObject.getJSONArray("files");
+
+//                        ArrayList<Feeds> feeds_arr=new ArrayList<>();
+//                        isLoading=true;
+                        if (media_files.length() > 0) {
+
+                            for (int a = 0; a < media_files.length(); a++) {
+
+
+                                AllList feed_obj = new AllList();
+                                JSONObject jsonObject1 = media_files.getJSONObject(a);
+
+                                boolean admin_quote=jsonObject1.getBoolean("admin_quote");
+
+                                if (admin_quote){
+//                                    new entry
+                                    String feed_blog_url="https://pk.zapmeta.ws/ws?q=blogs%20on%20websites&asid=zm_pk_gb_1_cg1_05&abt=1&mt=b&nw=g&de=c&ap=&kid=kwd-11480526309&aid=35417532236&ac=469&cid=686767819&aid=35417532236&kid=kwd-11480526309&locale=en_PK&gclid=Cj0KCQiAhs79BRD0ARIsAC6XpaWWdElwtrj-aSEJMNpbXYMrEVj2HGO-qAlNLVJfyJ-GOsjxvMzTXbkaAq1rEALw_wcB";
+
+                                    String feed_id = jsonObject1.getString("_id");
+                                    String title = jsonObject1.getString("title");
+                                    String large_image = jsonObject1.getString("large_image");
+                                    String small_image = jsonObject1.getString("small_image");
+
+                                    boolean liked_by_me=jsonObject1.getBoolean("liked_by_me");
+
+                                    int liked_count = jsonObject1.getInt("liked_count");
+                                    int comments_count = jsonObject1.getInt("comment_count");
+
+                                    JSONObject author = new JSONObject(jsonObject1.getString("author"));
+
+                                    String a_id = author.getString("_id");
+                                    String a_name = author.getString("name");
+                                    String a_img = author.getString("img");
+                                    boolean a_check = author.getBoolean("author");
+                                    JSONArray categories_ref = jsonObject1.getJSONArray("categories_ref");
+
+                                    categoriesarrayList = new ArrayList<>();
+
+                                    for (int i = 0; i < categories_ref.length(); i++){
+
+
+                                        JSONObject categories_obj =categories_ref.getJSONObject(i);
+                                        JSONObject categories = categories_obj.getJSONObject("category");
+                                        CategoriesList categoriesList = new CategoriesList();
+
+                                        String cate_id = categories.getString("_id");
+                                        String cate_title = categories.getString("title");
+                                        String cate_image = categories.getString("cat_img");
+
+                                        categoriesList.setCate_id(cate_id);
+                                        categoriesList.setCate_title(cate_title);
+                                        categoriesList.setCate_img(cate_image);
+                                        categoriesarrayList.add(categoriesList);
+                                    }
+
+                                    feed_obj.set_id(feed_id);
+                                    feed_obj.setTitle(title);
+                                    feed_obj.setLarge_image(large_image);
+                                    feed_obj.setSmall_image(small_image);
+                                    feed_obj.setLiked_by_me(liked_by_me);
+                                    feed_obj.setLiked_count(liked_count);
+                                    feed_obj.setComments_count(comments_count);
+                                    feed_obj.setAuther_id(a_id);
+                                    feed_obj.setAuther_name(a_name);
+                                    feed_obj.setAuther_img(a_img);
+                                    feed_obj.setAdmin_quote(true);
+                                    feed_obj.setAuthor_check(a_check);
+                                    feed_obj.setCategoriesArrayList(categoriesarrayList);
+                                    feed_obj.setBlog_url(feed_blog_url);
+
+                                    feedList.add(feed_obj);
+
+                                }else {
+
+                                    String feed_id = jsonObject1.getString("_id");
+                                    String title = jsonObject1.getString("title");
+
+                                    boolean liked_by_me=jsonObject1.getBoolean("liked_by_me");
+
+                                    int liked_count = jsonObject1.getInt("liked_count");
+                                    int comments_count = jsonObject1.getInt("comment_count");
+
+                                    JSONObject user = new JSONObject(jsonObject1.getString("user"));
+
+                                    String u_id = user.getString("_id");
+                                    String u_dp_active_file = user.getString("dp_active_file");
+                                    String u_full_name = user.getString("full_name");
+
+                                    feed_obj.set_id(feed_id);
+                                    feed_obj.setTitle(title);
+                                    feed_obj.setLiked_by_me(liked_by_me);
+                                    feed_obj.setLiked_count(liked_count);
+                                    feed_obj.setComments_count(comments_count);
+                                    feed_obj.setUser_id(u_id);
+                                    feed_obj.setUser_fullname(u_full_name);
+                                    feed_obj.setUser_dp(u_dp_active_file);
+                                    feed_obj.setAdmin_quote(false);
+                                    feed_obj.setCategoriesArrayList(categoriesarrayList);
+
+                                    feedList.add(feed_obj);
+                                }
+
+
+                            }
+
+
+                            String load_more_url = jsonObject.getString("load_more_url");
+
+                            feed_remain_array.clear();
+                            feed_remain_array.add(load_more_url);
+//
+//
+
+                            progressBar.setVisibility(View.GONE);
+
+
+                            adapter.addfeed(test);
+
+
+
+                        } else {
+
+                            progressBar.setVisibility(View.GONE);
+
+                        }
+
+//                            ringProgressDialog.dismiss();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    progressBar.setVisibility(View.GONE);
+
+//                    ringProgressDialog.dismiss();
+                    Toast.makeText(getActivity(), "Your internet Connection is slow", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+            }
+        });
+        // hit api--------------------
+
+
+    }
+
+
+    private void loadMoreItems() {
+        isLoading = false;
+
+
+        getFeedApi2(feed_remain_array.get(0));
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!feedList.isEmpty() && feedList != null){
+            if(positionForRefresh.equals("")){
+                getFeedApi(Constants.URL.GETALLFEED);
+            }
+            else {
+                adapter.notifyItemChanged(Integer.parseInt(positionForRefresh));
+                positionForRefresh="";
+            }
+        }
+    }
+
+
+
+}

@@ -78,7 +78,9 @@
             android:orientation="vertical"
 
 
-            ></LinearLayout>
+            >
+
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"

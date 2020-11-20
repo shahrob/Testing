@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="com.positivevibes.app.Fragments.FeedFragment"
+    tools:context="jokesbook.app.Fragments.FeedFragment"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     >

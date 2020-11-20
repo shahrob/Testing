@@ -181,6 +181,36 @@
             </LinearLayout>
 
 
+
+
+            <RelativeLayout
+                android:id="@+id/third_row_conatiner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                >
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:visibility="visible"
+                    android:layout_centerInParent="true"/>
+
+                <ImageView
+                    android:id="@+id/feed_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+
+                    android:layout_alignParentTop="true"
+
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    />
+
+            </RelativeLayout>
+
             <LinearLayout
                 android:id="@+id/second_row_container"
                 android:layout_width="match_parent"
@@ -211,35 +241,6 @@
 
 
             </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/third_row_conatiner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                >
-                <ProgressBar
-                    android:id="@+id/progress"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:visibility="visible"
-                    android:layout_centerInParent="true"/>
-
-                <ImageView
-                    android:id="@+id/feed_img"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-
-                    android:layout_alignParentTop="true"
-
-                    android:adjustViewBounds="true"
-                    android:scaleType="fitCenter"
-                    />
-
-            </RelativeLayout>
-
 
 
             <LinearLayout
@@ -493,7 +494,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                >
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
@@ -510,7 +512,9 @@
                 android:layout_marginBottom="5dp"
 
                 android:orientation="vertical"
-                ></LinearLayout>
+                >
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/add_parent_linear"

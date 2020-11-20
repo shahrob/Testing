@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context="com.positivevibes.app.Activity.FeedDetailedActivity">
+    tools:context="jokesbook.app.Activity.FeedDetailedActivity">
 
     <ProgressBar
         android:id="@+id/progress"

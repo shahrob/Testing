@@ -10,7 +10,7 @@
     android:theme="@style/TransparentBar"
     android:fitsSystemWindows="true"
 
-    tools:context="com.positivevibes.app.Activity.FirstActivity">
+    tools:context="jokesbook.app.Activity.FirstActivity">
 
 
     <RelativeLayout

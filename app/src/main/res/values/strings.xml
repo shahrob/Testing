@@ -43,13 +43,14 @@
     <!--</string-array>-->
 
     <string-array name="nav_item_activity_titles">
-        <item>Positive Vibes</item>
-        <item>Positive Vibes</item>
-        <item>Positive Vibes</item>
-        <item>Positive Vibes</item>
-        <item>Positive Vibes</item>
-        <item>Positive Vibes</item>
-        <item>Positive Vibes</item>
+        <item>Jokes Book</item>
+        <item>Jokes Book</item>
+        <item>Jokes Book</item>
+        <item>Jokes Book</item>
+        <item>Jokes Book</item>
+        <item>Jokes Book</item>
+        <item>Jokes Book</item>
+
     </string-array>
 
     <string name="month_prompt">Choose a Month</string>
@@ -83,6 +84,8 @@
 
     <string name="add_app_id">ca-app-pub-3940256099942544~3347511713</string>
     <string name="adUnitId">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="appid">ca-app-pub-2924023139304355~5493038675</string>
+    <string name="unitid">ca-app-pub-3940256099942544/6300978111</string>
 
 
 

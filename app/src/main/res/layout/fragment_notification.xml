@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
 
-    tools:context="com.positivevibes.app.Fragments.NotificationFragment">
+    tools:context="jokesbook.app.Fragments.NotificationFragment">
 
 
     <!-- TODO: Update blank fragment layout -->

@@ -7,60 +7,7 @@
             android:icon="@drawable/profile_white_icon"
             android:title="Profile"
             />
-        <item..................................................................................................................3
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            android:id="@+id/nav_home"
-            android:icon="@drawable/home_white_icon"
-            android:title="Home"
-            />
         <item
             android:id="@+id/nav_favourite"
             android:icon="@drawable/favourite_icon_white"
@@ -72,11 +19,8 @@
             android:icon="@drawable/notification_icon_white"
             android:title="Notifications"
             />
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/search_white_icon"
-            android:title="Search"
-            />
+
+
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/setting_icon_white"

@@ -182,36 +182,7 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:id="@+id/second_row_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                >
 
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <TextView
-                        android:id="@+id/feed_des"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:text="Hi i am developing android positivity app. We will live soon Hi i am developing android positivity app. We will live soon Hi i am developing android positivity app. We will live soon hasbncd"
-                        android:textColor="#3c3d3e"
-                        android:lineSpacingExtra="2dp"
-                        android:textSize="15sp"
-
-
-                        />
-                </RelativeLayout>
-
-
-            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/third_row_conatiner"
@@ -232,13 +203,89 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
-
                     android:layout_alignParentTop="true"
-
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter" />
 
             </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/second_row_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                >
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/feed_des"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="Hi i am developing android positivity app. We will live soon Hi i am developing android positivity app. We will live soon Hi i am developing android positivity app. We will live soon hasbncd"
+                        android:textColor="#3c3d3e"
+                        android:lineSpacingExtra="2dp"
+                        android:textSize="15sp"
+
+                        />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/feed_blog_url_llayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:visibility="gone"
+                >
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+<!--                    <TextView-->
+
+<!--                        android:id="@+id/blog"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingRight="10dp"-->
+<!--                        android:text="Blok link below"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/black"-->
+<!--                        android:lineSpacingExtra="2dp"-->
+<!--                        android:textSize="15sp"-->
+<!--                        android:maxLines="1"-->
+
+<!--                        />-->
+
+                    <TextView
+                        android:id="@+id/feed_blog_url"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="place url here"
+                        android:textStyle="italic"
+                        android:textColor="@color/green"
+                        android:lineSpacingExtra="2dp"
+                        android:textSize="15sp"
+                        android:maxLines="1"
+
+                        />
+                    android:textColor="#3c3d3e"
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
 
 
@@ -307,6 +354,7 @@
                         android:layout_height="15dp"
                         android:layout_centerInParent="true"
                         app:srcCompat="@drawable/feed_comment"
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -325,6 +373,7 @@
                         android:textColor="#000000"
                         android:layout_marginTop="-3dp"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -342,28 +391,32 @@
 
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
-                ></LinearLayout>
+                >
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/fourth_row_conatiner"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:weightSum="3"
                 android:orientation="horizontal"
+
                 >
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    ></RelativeLayout>
+                    android:layout_weight="0.0"
+                    android:visibility="gone"
+                    >
+
+                </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/like_heart_rel"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="0.3"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="2dp"
                     >
                     <ImageView
                         android:id="@+id/like_heart_img"
@@ -379,7 +432,8 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_weight="0.6"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     >
 
                     <TextView
@@ -390,8 +444,9 @@
                         android:paddingTop="5dp"
                         android:layout_marginTop="-5dp"
                         android:textStyle="bold"
-                        android:id="@+id/like_pray_fix"
                         android:text="Like"
+                        android:id="@+id/like_pray_fix"
+
 
 
 
@@ -405,7 +460,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="0.3"
                     android:layout_gravity="center"
-
+                    android:visibility="gone"
                     >
 
                     <ImageView
@@ -423,6 +478,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.8"
+                    android:visibility="gone"
                     >
                     <TextView
                         android:layout_width="match_parent"
@@ -460,8 +516,8 @@
                 <RelativeLayout
                     android:id="@+id/share_text_rel"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.6"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.3"
                     >
                     <TextView
                         android:layout_width="match_parent"
@@ -485,19 +541,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:orientation="vertical"
-                android:background="@color/line"></LinearLayout>
+                android:background="@color/line">
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
 
                 <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/feed_category_list"/>
+                    android:id="@+id/feed_category_list"
+                    android:visibility="visible"/>
 
             </LinearLayout>
 
@@ -507,9 +567,10 @@
                 android:layout_height="7dp"
                 android:background="#eaeaea"
                 android:layout_marginBottom="5dp"
-
                 android:orientation="vertical"
-                ></LinearLayout>
+                >
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/add_parent_linear"
@@ -527,10 +588,9 @@
                     android:layout_height="wrap_content"
                     android:text="Advertisement"
                     android:paddingLeft="10dp"
-
                     android:layout_gravity="center"
                     />
-                <com.google.android.gms.ads.AdView
+                <!--<com.google.android.gms.ads.AdView
 
                     android:visibility="gone"
                     android:layout_marginTop="10dp"
@@ -546,9 +606,9 @@
                     android:focusableInTouchMode="true"
 
 
-                    ></com.google.android.gms.ads.AdView>
+                    ></com.google.android.gms.ads.AdView>-->
 
-                <com.google.android.gms.ads.AdView
+               <!-- <com.google.android.gms.ads.AdView
                     android:visibility="gone"
 
                     android:layout_marginTop="10dp"
@@ -564,9 +624,9 @@
                     android:focusableInTouchMode="true"
 
 
-                    ></com.google.android.gms.ads.AdView>
+                    ></com.google.android.gms.ads.AdView>-->
 
-                <com.google.android.gms.ads.AdView
+               <!-- <com.google.android.gms.ads.AdView
                     android:visibility="gone"
 
                     android:layout_marginTop="10dp"
@@ -582,9 +642,9 @@
                     android:focusableInTouchMode="true"
 
 
-                    ></com.google.android.gms.ads.AdView>
+                    ></com.google.android.gms.ads.AdView>-->
 
-                <com.google.android.gms.ads.AdView
+               <!-- <com.google.android.gms.ads.AdView
                     android:visibility="gone"
 
                     android:layout_marginTop="10dp"
@@ -600,7 +660,9 @@
                     android:focusableInTouchMode="true"
 
 
-                    ></com.google.android.gms.ads.AdView>
+                    >
+
+                </com.google.android.gms.ads.AdView>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -609,7 +671,9 @@
                     android:layout_marginBottom="5dp"
 
                     android:orientation="vertical"
-                    ></LinearLayout>
+                    >
+
+                </LinearLayout>
             </LinearLayout>
 
 

@@ -30,8 +30,10 @@
 
     <color name="tab_background_selected">#c4212d</color>
     <color name="tab_background_unselected">#c4212d</color>
-    <color name="green">#109d58</color>
-    <color name="lightgreen">#11a35b</color>
+    <color name="green">#8e0438</color>
+    <color name="lightgreen">#8e0438</color>
+    <color name="navcolor">#9F0030</color>
+
 
 
 

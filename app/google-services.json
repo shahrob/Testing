@@ -1,50 +1,64 @@
 {
   "project_info": {
-    "project_number": "291222746308",
-    "firebase_url": "https://positive-vibes-d80d4.firebaseio.com",
-    "project_id": "positive-vibes-d80d4",
-    "storage_bucket": "positive-vibes-d80d4.appspot.com"
+    "project_number": "452157037610",
+    "firebase_url": "https://jokes-book-668e0.firebaseio.com",
+    "project_id": "jokes-book-668e0",
+    "storage_bucket": "jokes-book-668e0.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:291222746308:android:7e0a98b16820a969698591",
+        "mobilesdk_app_id": "1:452157037610:android:c49a4d3b9f960f2fa9f753",
         "android_client_info": {
-          "package_name": "com.positivevibes.app"
+          "package_name": "jokesbook.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "291222746308-ba2ht6efo34v32rbo243cncioi0akju1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.positivevibes.app",
-            "certificate_hash": "f577e0532b9948938f239e24e811036abb6ddce5"
-          }
-        },
-        {
-          "client_id": "291222746308-fd44c1cbqeiaekrk81rufrdlpnonfv4o.apps.googleusercontent.com",
+          "client_id": "452157037610-0ss8pgl0k03uqkmb9l5943krj2umosqm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC8gw2FoRAie8orQu9Mze0_MUpAZVna0Lk"
+          "current_key": "AIzaSyAO6SJrkUkFcERO5eU1XARL1HTV6K_0lOg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "291222746308-fd44c1cbqeiaekrk81rufrdlpnonfv4o.apps.googleusercontent.com",
+              "client_id": "452157037610-0ss8pgl0k03uqkmb9l5943krj2umosqm.apps.googleusercontent.com",
               "client_type": 3
-            },
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452157037610:android:ced7d1d577e0d441a9f753",
+        "android_client_info": {
+          "package_name": "jokesbook.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452157037610-0ss8pgl0k03uqkmb9l5943krj2umosqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO6SJrkUkFcERO5eU1XARL1HTV6K_0lOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
             {
-              "client_id": "291222746308-6h6tur3usfvak3c6qd9f0nta565d7e5a.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.positivevibes.app"
-              }
+              "client_id": "452157037610-0ss8pgl0k03uqkmb9l5943krj2umosqm.apps.googleusercontent.com",
+              "client_type": 3
             }
           ]
         }

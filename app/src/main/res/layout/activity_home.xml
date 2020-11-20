@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF"
-    tools:context="com.positivevibes.app.Activity.HomeActivity">
+    tools:context="jokesbook.app.Activity.HomeActivity">
 
     <FrameLayout
         android:id="@+id/frame"
@@ -16,7 +16,7 @@
         android:background="@color/white"
         >
 
-    <com.positivevibes.app.NonSwipeableViewPager
+    <jokesbook.app.NonSwipeableViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

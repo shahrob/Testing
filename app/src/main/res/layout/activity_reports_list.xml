@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="#0d7e46"
+        android:background="@color/green"
         android:id="@+id/submit_report_btn">
         <TextView
             android:layout_width="match_parent"

@@ -62,7 +62,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#0d7e46"
+        android:background="@color/green"
         android:gravity="center"
         android:orientation="horizontal"
         android:id="@+id/pray_btn_layout"
@@ -83,7 +83,7 @@
         <ImageView
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:src="@drawable/add_bold"
+            android:src="@drawable/app_icon_"
             android:layout_centerVertical="true"
             android:id="@+id/add_pray_icon" />
     </LinearLayout>

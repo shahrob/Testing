@@ -4,12 +4,12 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <item name="colorPrimary">#0d7e46</item>
+        <item name="colorPrimary">#8e0438</item>
         <!--<item name="colorPrimaryDark">@color/blue_background</item>-->
         <!--<item name="colorPrimaryDark">#26a658</item>-->
-        <item name="colorPrimaryDark">#0d7e46</item>
+        <item name="colorPrimaryDark">#9F0030</item>
         <!--<item name="colorAccent">@color/blue_background</item>-->
-        <item name="colorAccent">#0d7e46</item>
+        <item name="colorAccent">#9F0030</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
 
 

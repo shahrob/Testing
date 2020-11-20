@@ -78,25 +78,27 @@
 
 
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            app:tabIndicatorHeight="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabIndicatorColor="@color/white"
-            android:background="@color/lightgreen"
-            android:elevation="4dp"
+<!--        <android.support.design.widget.TabLayout-->
+<!--            android:id="@+id/tabs"-->
+<!--            app:tabIndicatorHeight="2dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            app:tabGravity="fill"-->
+<!--            app:tabMode="fixed"-->
+<!--            app:tabIndicatorColor="@color/white"-->
+<!--            android:background="@color/lightgreen"-->
+<!--            android:elevation="4dp"-->
 
-            android:visibility="visible"
-            />
+<!--            android:visibility="visible"-->
+<!--            />-->
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
 
-            ></LinearLayout>
+            >
+
+        </LinearLayout>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
